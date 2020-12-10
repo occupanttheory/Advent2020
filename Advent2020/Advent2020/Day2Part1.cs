@@ -4,12 +4,14 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace Advent2020
+namespace AdventOfCode.Advent2020
 {
     public static class Day2Part1
     {
+        public static readonly bool logging = false;
         public static void Run()
         {
+            Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("...Runnning Day 2 Puzzle 1: Finding valid passwords with the wrong policies");
             Console.WriteLine("...Reading password file");
@@ -25,43 +27,45 @@ namespace Advent2020
                 entryParts = entry.Trim().Split(' ').ToList();
                 if (entryParts.Count != 3)
                 {
-                    Error(", only has " + entryParts.Count + " elements");
+                    if (logging) Error(", only has " + entryParts.Count + " elements");
                     continue;
                 }
                 var range = entryParts[0].Split('-');
                 if (range.Length < 1 || range.Length > 2)
                 {
-                    Error(", cannot parse range: " + entryParts[0]);
+                    if (logging) Error(", cannot parse range: " + entryParts[0]);
                     continue;
                 }
                 if (!int.TryParse(range[0], out int minCount))
                 {
-                    Error(", cannot parse minimum count: " + range[0]);
+                    if (logging) Error(", cannot parse minimum count: " + range[0]);
                     continue;
                 }
                 int maxCount = minCount;
                 if (range.Length == 2 && !int.TryParse(range[1], out maxCount))
                 {
-                    Error(", cannot parse maximum count: " + range[1]);
+                    if (logging) Error(", cannot parse maximum count: " + range[1]);
                     continue;
                 }
                 if (entryParts[1].Length != 2)
                 {
-                    Error(", cannot parse token: " + entryParts[1]);
+                    if (logging) Error(", cannot parse token: " + entryParts[1]);
                     continue;
                 }
                 char token = entryParts[1][0];
                 if (string.IsNullOrEmpty(entryParts[2]))
                 {
-                    Error(", password is empty");
+                    if (logging) Error(", password is empty");
                     continue;
                 }
                 string password = entryParts[2];
                 if (Test(minCount, maxCount, token, password))
                     validCount++;
             }
-            Console.WriteLine("After inspecting " + totalCount + " password entries, the number that were valid is:");
-            Console.WriteLine();
+            timer.Stop();
+            Console.WriteLine("Inspected " + totalCount + " password entries.");
+            Console.WriteLine("Elapsed time was " + timer.ElapsedMilliseconds + " ms");
+            Console.Write("Valid password count: ");
             Console.ForegroundColor = ConsoleColor.Black;
             Console.BackgroundColor = ConsoleColor.Cyan;
             Console.Write(validCount);
@@ -78,19 +82,22 @@ namespace Advent2020
             int tokenCount = password.Count(t => t == token);
             if (tokenCount < minCount)
             {
-                Error(", min count rule: " + tokenCount + ", " + minCount + ", " + token + ", " + password);
+                if (logging) Error(", min count rule: " + tokenCount + ", " + minCount + ", " + token + ", " + password);
                 return false;
             }
             if (tokenCount > maxCount)
             {
-                Error(", max count rule: " + tokenCount + ", " + maxCount + ", " + token + ", " + password);
+                if (logging) Error(", max count rule: " + tokenCount + ", " + maxCount + ", " + token + ", " + password);
                 return false;
             }
-            Console.BackgroundColor = ConsoleColor.Green;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write("Valid password entry");            
-            Console.ResetColor();
-            Console.Write(": " + minCount + ", " + maxCount + ", " + token + ", " + password + Environment.NewLine);
+            if (logging)
+            {
+                Console.BackgroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write("Valid password entry");
+                Console.ResetColor();
+                Console.Write(": " + minCount + ", " + maxCount + ", " + token + ", " + password + Environment.NewLine);
+            }
             return true;
         }
 
