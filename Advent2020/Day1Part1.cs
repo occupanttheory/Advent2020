@@ -12,7 +12,7 @@ namespace Advent2020
             Console.WriteLine();
             Console.WriteLine("...Runnning Day 1 Puzzle 1: Verify expense report ");
             Console.WriteLine("...Reading expense report");
-            using var reader = new StreamReader(@"Resources\input.txt");          
+            using var reader = new StreamReader(@"Resources\input1.txt");          
             string entry;
             var candidates = new HashSet<int>();
             var timer = Stopwatch.StartNew();
@@ -34,8 +34,9 @@ namespace Advent2020
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.Black;
                     Console.BackgroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine(c * complement);
+                    Console.Write(c * complement);
                     Console.ResetColor();
+                    Console.WriteLine();
                     Console.WriteLine();
                     break;
                 }
