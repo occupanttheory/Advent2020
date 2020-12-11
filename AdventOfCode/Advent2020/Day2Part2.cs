@@ -8,14 +8,11 @@ namespace AdventOfCode.Advent2020
 {
     public static class Day2Part2
     {
-        public static readonly bool logging = false;
         public static void Run()
         {
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("...Runnning Day 2 Puzzle 2: Finding valid passwords with the right policies");
+            Message.Intro("...Runnning Day 2 Puzzle 2: Finding valid passwords with the right policies");
             Console.WriteLine("...Reading password file");
-            using var reader = new StreamReader(@"Resources\input2.txt");
+            using var reader = new StreamReader(@"Advent2020\Resources\input2.txt");
             string entry;
             var entryParts = new List<string>();
             var validCount = 0;
@@ -27,52 +24,41 @@ namespace AdventOfCode.Advent2020
                 entryParts = entry.Trim().Split(' ').ToList();
                 if (entryParts.Count != 3)
                 {
-                    if (logging) Error(", only has " + entryParts.Count + " elements");
+                    if (Message.Verbose) Message.Error("Invalid password entry", ", only has " + entryParts.Count + " elements");
                     continue;
                 }
                 var range = entryParts[0].Split('-');
                 if (range.Length != 2)
                 {
-                    if (logging) Error(", cannot parse positions: " + entryParts[0]);
+                    if (Message.Verbose) Message.Error("Invalid password entry", ", cannot parse positions: " + entryParts[0]);
                     continue;
                 }
                 if (!int.TryParse(range[0], out int firstPosition))
                 {
-                    if (logging) Error(", cannot parse first position: " + range[0]);
+                    if (Message.Verbose) Message.Error("Invalid password entry", ", cannot parse first position: " + range[0]);
                     continue;
                 }
                 if (!int.TryParse(range[1], out int secondPosition))
                 {
-                    if (logging) Error(", cannot parse second position: " + range[1]);
+                    if (Message.Verbose) Message.Error("Invalid password entry", ", cannot parse second position: " + range[1]);
                     continue;
                 }
                 if (entryParts[1].Length != 2)
                 {
-                    if (logging) Error(", cannot parse token: " + entryParts[1]);
+                    if (Message.Verbose) Message.Error("Invalid password entry", ", cannot parse token: " + entryParts[1]);
                     continue;
                 }
                 char token = entryParts[1][0];
                 if (string.IsNullOrEmpty(entryParts[2]))
                 {
-                    if (logging) Error(", password is empty");
+                    if (Message.Verbose) Message.Error("Invalid password entry", ", password is empty");
                     continue;
                 }
                 string password = entryParts[2];
                 if (Test(firstPosition, secondPosition, token, password))
                     validCount++;
             }
-            Console.WriteLine("Inspected " + totalCount + " password entries.");
-            Console.WriteLine("Elapsed time was " + timer.ElapsedMilliseconds + " ms");
-            Console.Write("Valid password count: ");
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.BackgroundColor = ConsoleColor.Cyan;
-            Console.Write(validCount);
-            Console.ResetColor();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("Press any key to return to the menu.");
-            Console.ReadKey();
-            Console.WriteLine();
+            Message.Solution("Inspected " + totalCount + " password entries.", timer.ElapsedMilliseconds, validCount);
         }
 
         public static bool Test(int firstPosition, int secondPosition, char token, string password)
@@ -80,7 +66,7 @@ namespace AdventOfCode.Advent2020
             int matches = 0;
             if (password.Length < firstPosition - 1)
             {
-                if (logging) Error(", password too short: " + firstPosition + ", " + password);
+                if (Message.Verbose) Message.Error("Invalid password entry", ", password too short: " + firstPosition + ", " + password);
                 return false;
             }
             char first = password[firstPosition - 1];
@@ -92,32 +78,17 @@ namespace AdventOfCode.Advent2020
             }
             if (matches < 1)
             {
-                if (logging) Error(", neither position correct: " + firstPosition + ", " + secondPosition + ", " + token + ", " + password);
+                if (Message.Verbose) Message.Error("Invalid password entry", ", neither position correct: " + firstPosition + ", " + secondPosition + ", " + token + ", " + password);
                 return false;
             }
             if (matches > 1)
             {
-                if (logging) Error(", both positions correct: " + firstPosition + ", " + secondPosition + ", " + token + ", " + password);
+                if (Message.Verbose) Message.Error("Invalid password entry", ", both positions correct: " + firstPosition + ", " + secondPosition + ", " + token + ", " + password);
                 return false;
             }
-            if (logging)
-            {
-                Console.BackgroundColor = ConsoleColor.Green;
-                Console.ForegroundColor = ConsoleColor.Black;
-                Console.Write("Valid password entry");
-                Console.ResetColor();
-                Console.Write(": " + firstPosition + ", " + secondPosition + ", " + token + ", " + password + Environment.NewLine);
-            }
-            return true;
-        }
+            if (Message.Verbose) Message.Success("Valid password entry", ": " + firstPosition + ", " + secondPosition + ", " + token + ", " + password + Environment.NewLine);
 
-        public static void Error(string message)
-        {
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("Invalid password entry");
-            Console.ResetColor();
-            Console.Write(message + Environment.NewLine);
+            return true;
         }
     }
 }

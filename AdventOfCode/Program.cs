@@ -32,6 +32,8 @@ namespace AdventOfCode
                         break;
                 }
             }
+            Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine("Goodbye, Occupant.");
             Console.ReadKey();
         }
