@@ -6,6 +6,7 @@ namespace AdventOfCode
 {
     public static class Message
     {
+        // set this to true if you want a lot of diagnostic messages
         public static bool Verbose = false;
         public static void Intro(string description)
         {
