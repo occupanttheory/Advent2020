@@ -13,7 +13,8 @@ namespace AdventOfCode
             {
                 Console.WriteLine("Which Advent of Code year do you want to run?");
                 Console.WriteLine();
-                Console.WriteLine("(1) Advent of Code 2020");
+                Console.WriteLine("(1) Advent of Code 2021");
+                Console.WriteLine("(2) Advent of Code 2020");
                 Console.WriteLine();
                 Console.WriteLine("(X) Exit program");
 
@@ -24,7 +25,8 @@ namespace AdventOfCode
                     case 'x':
                         exit = true;
                         break;
-                    case '1': Advent2020.Advent2020.Run(); break;
+                    case '1': Advent2021.Advent2021.Run(); break;
+                    case '2': Advent2020.Advent2020.Run(); break;
                     default:
                         Console.WriteLine();
                         Console.WriteLine("Sorry, that input was not recognized.");

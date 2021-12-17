@@ -15,7 +15,7 @@ namespace AdventOfCode.Advent2020
 
         public static void Run()
         {
-            Message.Intro("...Runnning Day 4 Puzzle 1: Count the number of valid passports");
+            Message.Intro("...Runnning Day 4 Puzzle 2: Count the number of valid passports");
             Console.WriteLine("...Reading passport file");
             using var reader = new StreamReader(@"Advent2020\Resources\input4.txt");
             string line, currentPassport = string.Empty;
