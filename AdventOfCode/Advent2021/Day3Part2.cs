@@ -15,6 +15,7 @@ namespace AdventOfCode.Advent2021
       string line;
       var timer = Stopwatch.StartNew();
 
+      // count the number of 1s in each ordinal
       var count1s = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
       int total = 0;
       while ((line = reader.ReadLine()) != null)
@@ -25,6 +26,7 @@ namespace AdventOfCode.Advent2021
           if (countString[i] == '1') count1s[i]++;
       }
 
+      // create a string of the most common entry in each ordinal
       int half = total / 2;
       var oxygenList = count1s.Select(x =>
       {
@@ -32,17 +34,20 @@ namespace AdventOfCode.Advent2021
         return 0;
       });
       var oxygenString = string.Join(string.Empty, oxygenList);
+      // create a string of the least common entry in each orderinal
       var co2List = count1s.Select(x =>
       {
-        if (x >= 500) return 0;
+        if (x > 500) return 0;
         return 1;
       });
       var co2String = string.Join(string.Empty, co2List);
 
+      // back to the start of the file
       reader.DiscardBufferedData();
       reader.BaseStream.Seek(0, SeekOrigin.Begin);
       string oxygenCandidate = string.Empty, co2Candidate = string.Empty;
 
+      // look for the string that most closely matches the most/least common strings from left to right
       uint oxygenRecord = 0, co2Record = 0;
       while ((line = reader.ReadLine()) != null)
       {
