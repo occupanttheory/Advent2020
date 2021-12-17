@@ -34,7 +34,7 @@ namespace AdventOfCode.Advent2021
         return 0;
       });
       var oxygenString = string.Join(string.Empty, oxygenList);
-      // create a string of the least common entry in each orderinal
+      // create a string of the least common entry in each ordinal
       var co2List = count1s.Select(x =>
       {
         if (x > 500) return 0;
@@ -47,7 +47,7 @@ namespace AdventOfCode.Advent2021
       reader.BaseStream.Seek(0, SeekOrigin.Begin);
       string oxygenCandidate = string.Empty, co2Candidate = string.Empty;
 
-      // look for the string that most closely matches the most/least common strings from left to right
+      // look for the strings that most closely matches the most/least common strings from left to right
       uint oxygenRecord = 0, co2Record = 0;
       while ((line = reader.ReadLine()) != null)
       {
