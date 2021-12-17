@@ -16,3 +16,7 @@ Puzzle 6 (1ms): Traverse matrix horizontally looping with several slopes and mul
 Puzzle 7 (15ms): Count valid collections of multi-line name value pairs based on presence of required names
 
 Puzzle 8 (30ms): Count valid collections of multi-line name value pairs based on presence of required names with valid values
+
+Puzzle 9 (9ms): Find the highest number in a list of numbers endcoded into unusual binary strings
+
+Puzzle 10
